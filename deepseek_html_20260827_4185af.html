@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MonSite - Complet</title>
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #1a1a2e;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #e94560;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            background: #e94560;
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .burger span {
+            width: 28px;
+            height: 3px;
+            background: #fff;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        .burger.toggle span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .burger.toggle span:nth-child(2) {
+            opacity: 0;
+        }
+        .burger.toggle span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 80vh;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span {
+            color: #e94560;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #e94560;
+            color: #fff;
+            padding: 0.8rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            font-size: 1rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #c73652;
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #fff;
+            margin-left: 0.5rem;
+        }
+
+        .btn-outline:hover {
+            background: #fff;
+            color: #1a1a2e;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 2.5rem;
+            color: #1a1a2e;
+        }
+
+        .section h2 span {
+            color: #e94560;
+        }
+
+        .alt-bg {
+            background: #f4f4f9;
+            border-radius: 20px;
+            padding: 4rem 2rem;
+        }
+
+        /* ===== CARDS ===== */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .card .icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card h3 {
+            margin-bottom: 0.8rem;
+            color: #1a1a2e;
+        }
+
+        .card .badge {
+            display: inline-block;
+            background: #e94560;
+            color: #fff;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== STATS ===== */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .stats .stat h3 {
+            font-size: 2.5rem;
+            color: #e94560;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #e94560;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.2);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+        }
+
+        .form-feedback {
+            margin-top: 1rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* ===== NEWSLETTER ===== */
+        .newsletter {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .newsletter h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter input {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            width: 300px;
+            max-width: 100%;
+            margin-top: 1rem;
+        }
+
+        .newsletter .btn {
+            margin-top: 0.5rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #1a1a2e;
+            color: #fff;
+            margin-top: 2rem;
+        }
+
+        footer .socials {
+            margin-top: 1rem;
+        }
+
+        footer .socials a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 0.8rem;
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+
+        footer .socials a:hover {
+            color: #e94560;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 0.5s;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 5px solid #4caf50;
+        }
+        .toast.error {
+            border-left: 5px solid #e94560;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: #1a1a2e;
+                padding: 1rem 0;
+                position: absolute;
+                top: 70px;
+                left: 0;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links li {
+                text-align: center;
+                padding: 0.5rem 0;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .newsletter input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 0.8rem 1rem;
+            }
+            .hero {
+                min-height: 60vh;
+                padding: 0 1rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .section {
+                padding: 2rem 1rem;
+            }
+            .alt-bg {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVIGATION ===== -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">Mon<span>Site</span></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#accueil" class="active">Accueil</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#equipe">Équipe</a></li>
+                <li><a href="#temoignages">Témoignages</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ===== HERO / ACCUEIL ===== -->
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <h1>Bienvenue sur <span>MonSite</span></h1>
+            <p>Une solution complète pour vos projets web. Design moderne, performance et simplicité.</p>
+            <div>
+                <a href="#services" class="btn">Nos Services</a>
+                <a href="#contact" class="btn btn-outline">Nous Contacter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="section alt-bg" style="padding-bottom:2rem;">
+        <div class="stats">
+            <div class="stat">
+                <h3>150+</h3>
+                <p>Projets réalisés</p>
+            </div>
+            <div class="stat">
+                <h3>98%</h3>
+                <p>Satisfaction client</p>
+            </div>
+            <div class="stat">
+                <h3>24/7</h3>
+                <p>Support disponible</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section id="services" class="section">
+        <h2>Nos <span>Services</span></h2>
+        <div class="cards">
+            <div class="card">
+                <div class="icon">🚀</div>
+                <h3>Web Design</h3>
+                <p>Des interfaces modernes et intuitives adaptées à tous les écrans.</p>
+                <span class="badge">Populaire</span>
+            </div>
+            <div class="card">
+                <div class="icon">⚡</div>
+                <h3>Développement</h3>
+                <p>Code propre, performant et évolutif pour vos applications.</p>
+            </div>
+            <div class="card">
+                <div class="icon">📈</div>
+                <h3>SEO & Marketing</h3>
+                <p>Optimisez votre visibilité sur les moteurs de recherche.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🛡️</div>
+                <h3>Sécurité</h3>
+                <p>Protection et sauvegarde de vos données sensibles.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ÉQUIPE ===== -->
+    <section id="equipe" class="section alt-bg">
+        <h2>Notre <span>Équipe</span></h2>
+        <div class="cards">
+            <div class="card">
+                <div class="icon">👩‍🎨</div>
+                <h3>Alice Martin</h3>
+                <p>Designer UI/UX</p>
+                <span class="badge">5 ans d'exp.</span>
+            </div>
+            <div class="card">
+                <div class="icon">👨‍💻</div>
+                <h3>Bob Dubois</h3>
+                <p>Développeur Full Stack</p>
+                <span class="badge">Expert React</span>
+            </div>
+            <div class="card">
+                <div class="icon">👩‍💼</div>
+                <h3>Claire Bernard</h3>
+                <p>Cheffe de projet</p>
+                <span class="badge">Agile certifiée</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TÉMOIGNAGES ===== -->
+    <section id="temoignages" class="section">
+        <h2>Témoignages</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="icon">⭐</div>
+                <p>"MonSite a transformé notre présence en ligne. Un travail remarquable !"</p>
+                <p style="margin-top:0.5rem;font-weight:bold;">— Marie, CEO</p>
+            </div>
+            <div class="card">
+                <div class="icon">⭐</div>
+                <p>"Une équipe à l'écoute et très professionnelle. Je recommande vivement."</p>
+                <p style="margin-top:0.5rem;font-weight:bold;">— Jean, Entrepreneur</p>
+            </div>
+            <div class="card">
+                <div class="icon">⭐</div>
+                <p>"Délais respectés et qualité au rendez-vous. Un vrai plaisir de collaborer."</p>
+                <p style="margin-top:0.5rem;font-weight:bold;">— Sophie, Directrice</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEWSLETTER ===== -->
+    <section class="section" style="max-width:800px;">
+        <div class="newsletter">
+            <h3>📬 Abonnez-vous à notre newsletter</h3>
+            <p>Recevez nos actualités et bons plans chaque mois.</p>
+            <form id="newsletterForm">
+                <input type="email" placeholder="Votre email" required />
+                <button type="submit" class="btn" style="display:inline-block;margin-top:0.5rem;">S'abonner</button>
+            </form>
+            <p id="newsletterFeedback" style="margin-top:0.8rem;font-weight:bold;"></p>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="section alt-bg">
+        <h2>Nous <span>Contacter</span></h2>
+        <form class="contact-form" id="contactForm">
+            <input type="text" placeholder="Votre nom complet" required />
+            <input type="email" placeholder="Votre email" required />
+            <input type="text" placeholder="Sujet" />
+            <textarea rows="5" placeholder="Votre message" required></textarea>
+            <button type="submit" class="btn">Envoyer le message</button>
+        </form>
+        <div class="form-feedback" id="formFeedback"></div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>&copy; 2026 MonSite. Tous droits réservés.</p>
+        <div class="socials">
+            <a href="#" title="Facebook">📘</a>
+            <a href="#" title="Twitter">🐦</a>
+            <a href="#" title="LinkedIn">🔗</a>
+            <a href="#" title="Instagram">📸</a>
+        </div>
+    </footer>
+
+    <!-- ===== TOAST NOTIFICATION ===== -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ============================================================ -->
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== MENU BURGER =====
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('navLinks');
+
+        burger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            burger.classList.toggle('toggle');
+        });
+
+        // Fermer le menu au clic sur un lien
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                burger.classList.remove('toggle');
+            });
+        });
+
+        // Lien actif au scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navAnchors = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navAnchors.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ===== TOAST SYSTEM =====
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // ===== FORMULAIRE CONTACT =====
+        const contactForm = document.getElementById('contactForm');
+        const formFeedback = document.getElementById('formFeedback');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = contactForm.querySelector('.btn');
+            btn.textContent = 'Envoi en cours...';
+            btn.disabled = true;
+
+            // Simulation d'envoi
+            setTimeout(() => {
+                formFeedback.textContent = '✅ Message envoyé avec succès ! Nous vous répondrons rapidement.';
+                formFeedback.style.color = 'green';
+                contactForm.reset();
+                btn.textContent = 'Envoyer le message';
+                btn.disabled = false;
+                showToast('Message envoyé avec succès !', 'success');
+            }, 1500);
+        });
+
+        // ===== NEWSLETTER =====
+        const newsletterForm = document.getElementById('newsletterForm');
+        const newsletterFeedback = document.getElementById('newsletterFeedback');
+
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = newsletterForm.querySelector('input').value;
+            newsletterFeedback.textContent = '✅ Merci, ' + email + ' est bien enregistré !';
+            newsletterFeedback.style.color = '#4caf50';
+            newsletterForm.reset();
+            showToast('Inscription à la newsletter réussie !', 'success');
+        });
+
+        // ===== ANIMATION AU SCROLL (apparition des cartes) =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(40px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            card.style.transitionDelay = (index * 0.1) + 's';
+            observer.observe(card);
+        });
+
+        // ===== BOUTON RETOUR EN HAUT (créé dynamiquement) =====
+        const backToTop = document.createElement('button');
+        backToTop.textContent = '⬆';
+        backToTop.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #e94560;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(233,69,96,0.4);
+            transition: 0.3s;
+            opacity: 0;
+            transform: scale(0);
+            z-index: 999;
+        `;
+        document.body.appendChild(backToTop);
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.style.opacity = '1';
+                backToTop.style.transform = 'scale(1)';
+            } else {
+                backToTop.style.opacity = '0';
+                backToTop.style.transform = 'scale(0)';
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== PETIT MESSAGE DE BIENVENUE =====
+        console.log('🚀 Bienvenue sur MonSite !');
+        console.log('📧 N\'hésitez pas à nous contacter.');
+    </script>
+</body>
+</html>
